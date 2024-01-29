@@ -5,19 +5,24 @@
 {% block content %}
     <div class="container">
         <h2 class="mt-4 mb-4">Task List</h2>
-        <ul class="list-group">
-            {% for task in tasks %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{% url 'task_details' task.id %}">{{ task.title }}</a>
-                <div>
-                    <a href="{% url 'task_update' task.id %}" class="btn btn-primary btn-sm mr-2">Edit</a>
-                    <a href="{% url 'task_delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
-                </div>
-                {% if task.completed %}
-                    <span class="badge bg-success">Completed</span>
-                {% endif %} 
-            </li>
-            {% endfor %}
-        </ul>
+
+        {% if tasks %}
+            <ul class="list-group">
+                {% for task in tasks %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="{% url 'task_details' task.id %}">{{ task.title }}</a>
+                        <div>
+                            <a href="{% url 'task_update' task.id %}" class="btn btn-primary btn-sm mr-2">Edit</a>
+                            <a href="{% url 'task_delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                        {% if task.completed %}
+                            <span class="badge bg-success">Completed</span>
+                        {% endif %} 
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tasks created. <a href="{% url 'task_create' %}" class="btn btn-primary">Click here to create a task</a></p>
+        {% endif %}
     </div>
 {% endblock %}
